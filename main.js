@@ -13,20 +13,15 @@ let OFF = 4
 let NEG = BOX_SIZE - OFF
 function n() {}
 
-let x = () => {d(); u()}
-let l = () => line(OFF, OFF, OFF, NEG)
-let r = () => line(NEG, OFF, NEG, NEG)
-let t = () => line(OFF, OFF, NEG, OFF)
-let b = () => line(OFF, NEG, NEG, NEG)
-let d = () => line(OFF, OFF, NEG, NEG)
-let u = () => line(OFF, NEG, NEG, OFF)
-let s = () => {t(); l(); r(); b();}
+let l = () => line(OFF, OFF, NEG, OFF)
+let d = () => line(OFF, NEG, NEG, OFF)
+let h = () => line(OFF, NEG, BOX_SIZE/2, BOX_SIZE/2)
 
 let SHAPE = [
-                [u, t, d, b],
-                [l, s, r, x],
-                [d, b, u, t],
-                [r, x, l, s]
+                [l, n, n],
+                [l, n, h],
+                [n, d, l],
+                [n, n, l]
             ]
 
 function setup() {
@@ -68,16 +63,21 @@ function drawAllShapes() {
 }
 
 function drawShape() {
-    push()
-    for(let  i = 0; i < SHAPE_BOXES; i++) {
+    for (let r = 0; r < 4; r++) {
         push()
-        for (let j = 0; j < SHAPE_BOXES; j++) {
-            SHAPE[j][i]()
-            translate(0, BOX_SIZE)        
+        for(let  i = 0; i < SHAPE[0].length; i++) {
+            push()
+            for (let j = 0; j < SHAPE.length; j++) {
+                SHAPE[j][i]()
+                translate(0, BOX_SIZE)        
+            }
+            pop()
+            translate(BOX_SIZE, 0)
         }
         pop()
-        translate(BOX_SIZE, 0)
+        translate(BOX_SIZE/2, BOX_SIZE/2)   
+        rotate(HALF_PI)
+        translate(-BOX_SIZE/2, -BOX_SIZE/2)   
     }
-    pop()
 }
 
