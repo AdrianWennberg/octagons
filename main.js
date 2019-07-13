@@ -1,6 +1,6 @@
-let SIZE = 500
+let SIZE = 760
 
-let SHAPES = 5
+let SHAPES = 14
 let SHAPE_BOXES = 4
 
 let LINES = SHAPE_BOXES * SHAPES
@@ -22,7 +22,7 @@ let SHAPE = [
                 [l, n, n],
                 [l, n, h],
                 [n, d, l],
-                [n, n, l]
+                [n, n, l],
             ]
 let CENTER = {x: 2, y: 3}
 
@@ -32,17 +32,17 @@ function setup() {
   
 function draw() {
     translate(1, 1)
+    strokeWeight(2)
+    background(220)
     drawGrid()
 
-    strokeWeight(4)
+    strokeWeight(2)
 
     drawAllShapes()
     noLoop()
 }
 
 function drawGrid() {
-    background(220)
-    strokeWeight(2)
     for(let i = 0; i <= LINES; i++) {
         let pos = i * BOX_SIZE
         line(0, pos, SIZE, pos)
