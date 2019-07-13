@@ -15,7 +15,8 @@ function n() {}
 
 let l = () => line(OFF, OFF, NEG, OFF)
 let d = () => line(OFF, NEG, NEG, OFF)
-let h = () => line(OFF, NEG, BOX_SIZE/2, BOX_SIZE/2)
+let h = () => {line(OFF, NEG, BOX_SIZE/2, BOX_SIZE/2)
+               line(NEG, NEG, BOX_SIZE/2, BOX_SIZE/2)}
 
 let SHAPE = [
                 [l, n, n],
@@ -23,6 +24,7 @@ let SHAPE = [
                 [n, d, l],
                 [n, n, l]
             ]
+let CENTER = {x: 2, y: 3}
 
 function setup() {
     createCanvas(SIZE + 2, SIZE + 2);
@@ -49,20 +51,22 @@ function drawGrid() {
 }
 
 function drawAllShapes() {
-    push()
-    for(let i = 0; i < LINES; i+= SHAPE_BOXES) {
+    for(let i = -1; i <= SHAPES; i+= 1) {
         push()
-        for(let j = 0; j < LINES; j+= SHAPE_BOXES) {
+        translate(i * SHAPE_SIZE, 0)
+        for(let j = -1; j <= SHAPES; j+= 1) {
+            push()
+            translate(0, j * SHAPE_SIZE)
             drawShape()
-            translate(0, SHAPE_SIZE)
+            pop()
         }
         pop()
-        translate(SHAPE_SIZE, 0)
     }
-    pop()
 }
 
 function drawShape() {
+    let xOff = BOX_SIZE * CENTER.x + BOX_SIZE/2
+    let yOff = BOX_SIZE * CENTER.y + BOX_SIZE/2
     for (let r = 0; r < 4; r++) {
         push()
         for(let  i = 0; i < SHAPE[0].length; i++) {
@@ -75,9 +79,9 @@ function drawShape() {
             translate(BOX_SIZE, 0)
         }
         pop()
-        translate(BOX_SIZE/2, BOX_SIZE/2)   
+        translate(xOff, yOff)   
         rotate(HALF_PI)
-        translate(-BOX_SIZE/2, -BOX_SIZE/2)   
+        translate(-xOff, -yOff)    
     }
 }
 
