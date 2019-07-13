@@ -1,16 +1,15 @@
-let SIZE = 760
-
-let SHAPES = 14
+let X_LINES, Y_LINES
 let SHAPE_BOXES = 4
 
-let LINES = SHAPE_BOXES * SHAPES
+let BOX_SIZE = 20
 
-let BOX_SIZE = SIZE / LINES
+
 let SHAPE_SIZE = BOX_SIZE * SHAPE_BOXES
 
 
 let OFF = 4
 let NEG = BOX_SIZE - OFF
+
 function n() {}
 
 let l = () => line(OFF, OFF, NEG, OFF)
@@ -27,8 +26,12 @@ let SHAPE = [
 let CENTER = {x: 2, y: 3}
 
 function setup() {
-    createCanvas(SIZE + 2, SIZE + 2);
+    cnv = createCanvas(windowWidth, windowHeight);
+    cnv.style('display', 'block');
+    X_LINES = windowWidth / BOX_SIZE
+    Y_LINES = windowHeight / BOX_SIZE
 }
+
   
 function draw() {
     translate(1, 1)
@@ -43,18 +46,22 @@ function draw() {
 }
 
 function drawGrid() {
-    for(let i = 0; i <= LINES; i++) {
+    for(let i = 0; i <= X_LINES; i++) {
         let pos = i * BOX_SIZE
-        line(0, pos, SIZE, pos)
-        line(pos, 0, pos, SIZE)
+        line(pos, 0, pos, windowHeight)
+    } 
+
+    for(let i = 0; i <= Y_LINES; i++) {
+        let pos = i * BOX_SIZE
+        line(0, pos, windowWidth, pos)
     } 
 }
 
 function drawAllShapes() {
-    for(let i = -1; i <= SHAPES; i+= 1) {
+    for(let i = -1; i <= Y_LINES; i+= 1) {
         push()
         translate(i * SHAPE_SIZE, 0)
-        for(let j = -1; j <= SHAPES; j+= 1) {
+        for(let j = -1; j <= X_LINES; j+= 1) {
             push()
             translate(0, j * SHAPE_SIZE)
             drawRotations()
