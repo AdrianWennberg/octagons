@@ -57,31 +57,39 @@ function drawAllShapes() {
         for(let j = -1; j <= SHAPES; j+= 1) {
             push()
             translate(0, j * SHAPE_SIZE)
-            drawShape()
+            drawRotations()
             pop()
         }
         pop()
     }
 }
 
-function drawShape() {
+function drawRotations() {
     let xOff = BOX_SIZE * CENTER.x + BOX_SIZE/2
     let yOff = BOX_SIZE * CENTER.y + BOX_SIZE/2
     for (let r = 0; r < 4; r++) {
-        push()
-        for(let  i = 0; i < SHAPE[0].length; i++) {
-            push()
-            for (let j = 0; j < SHAPE.length; j++) {
-                SHAPE[j][i]()
-                translate(0, BOX_SIZE)        
-            }
-            pop()
-            translate(BOX_SIZE, 0)
-        }
-        pop()
-        translate(xOff, yOff)   
-        rotate(HALF_PI)
-        translate(-xOff, -yOff)    
+        drawShape();
+        rotateAround(HALF_PI, xOff, yOff);    
     }
+}
+
+function drawShape() {
+    push();
+    for (let i = 0; i < SHAPE[0].length; i++) {
+        push();
+        for (let j = 0; j < SHAPE.length; j++) {
+            SHAPE[j][i]();
+            translate(0, BOX_SIZE);
+        }
+        pop();
+        translate(BOX_SIZE, 0);
+    }
+    pop();
+}
+
+function rotateAround(angle, xOff, yOff) {
+    translate(xOff, yOff);
+    rotate(angle);
+    translate(-xOff, -yOff);
 }
 
